@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Netflix | Bachaaaa ❤️</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #080808;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+        overflow-x: hidden;
+      }
+
+      button {
+        cursor: pointer;
+        border: none;
+        transition: 0.3s ease;
+      }
+
+      /* INTRO */
+
+      .intro {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle, #191919, #000 75%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 1000;
+        transition: 1s;
+      }
+
+      .intro h1 {
+        color: #e50914;
+        font-size: clamp(90px, 16vw, 150px);
+        font-weight: 1000;
+        letter-spacing: -8px;
+        text-shadow: 0 0 50px #e5091460;
+        animation: netflixZoom 2s infinite alternate;
+      }
+
+      .intro h1::after {
+        content: "ETFLIX";
+        font-size: inherit;
+      }
+
+      @keyframes netflixZoom {
+        from {
+          transform: scale(0.95);
+        }
+        to {
+          transform: scale(1.08);
+        }
+      }
+
+      .start-btn {
+        position: absolute;
+        bottom: 18%;
+        background: #e50914;
+        color: white;
+        padding: 15px 38px;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        box-shadow: 0 0 25px #e5091450;
+      }
+
+      /* LETTER */
+
+      .letter-screen {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle, #252525, #050505);
+        z-index: 900;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 20px;
+        overflow-y: auto;
+      }
+
+      .letter {
+        width: 100%;
+        max-width: 570px;
+        margin: auto;
+        flex-shrink: 0;
+        background: linear-gradient(145deg, #202020, #101010);
+        padding: 38px 30px;
+        border-radius: 12px;
+        text-align: center;
+        border: 1px solid #383838;
+        box-shadow: 0 0 60px #e5091420;
+        animation: letterOpen 0.8s ease;
+      }
+
+      @keyframes letterOpen {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .letter h2 {
+        color: #ff4545;
+        font-size: 25px;
+        margin-bottom: 25px;
+      }
+
+      .letter p {
+        line-height: 1.9;
+        color: #ddd;
+        margin-bottom: 22px;
+        font-size: 15px;
+      }
+
+      .red-btn {
+        background: #e50914;
+        color: white;
+        padding: 14px 27px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 10px;
+        box-shadow: 0 5px 20px #e5091430;
+      }
+
+      .red-btn:hover,
+      .start-btn:hover {
+        background: #ff1b26;
+        transform: scale(1.05);
+      }
+
+      /* WHO'S WATCHING */
+
+      .profiles {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(ellipse at center, #242424, #080808);
+        z-index: 800;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .profiles h1 {
+        font-size: clamp(30px, 5vw, 55px);
+        font-weight: 400;
+        margin-bottom: 45px;
+      }
+
+      .profile {
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .profile img {
+        width: 155px;
+        height: 155px;
+        border-radius: 9px;
+        object-fit: cover;
+        border: 3px solid transparent;
+        transition: 0.3s;
+        box-shadow: 0 10px 35px #000;
+      }
+
+      .profile:hover {
+        transform: scale(1.08);
+      }
+
+      .profile:hover img {
+        border-color: white;
+        box-shadow: 0 0 30px #e5091470;
+      }
+
+      .profile p {
+        margin-top: 16px;
+        color: #aaa;
+        font-size: 19px;
+      }
+
+      .profile:hover p {
+        color: white;
+      }
+
+      /* MAIN NETFLIX */
+
+      .main {
+        display: none;
+        min-height: 100vh;
+        background: #080808;
+        animation: pageEnter 1s ease;
+      }
+
+      @keyframes pageEnter {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* NAVBAR */
+
+      .navbar {
+        height: 75px;
+        padding: 0 5%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(to bottom, #000 10%, transparent);
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+      }
+
+      .logo {
+        color: #e50914;
+        font-size: 35px;
+        font-weight: 1000;
+        letter-spacing: -2px;
+      }
+
+      .navbar span {
+        color: #eee;
+        font-size: 15px;
+        font-weight: bold;
+      }
+
+      /* HERO */
+
+      .hero {
+        height: 85vh;
+        min-height: 550px;
+        background:
+          linear-gradient(to right, #080808 3%, #080808b0 35%, transparent 85%),
+          linear-gradient(to top, #080808 2%, transparent 65%),
+          url("images/lo.jpg.jpeg") center 35% / cover no-repeat;
+        display: flex;
+        align-items: center;
+        padding: 0 6%;
+        position: relative;
+      }
+
+      .hero-content {
+        max-width: 600px;
+        padding-top: 80px;
+      }
+
+      .tag {
+        color: #e50914;
+        font-weight: 900;
+        letter-spacing: 5px;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .hero h1 {
+        font-size: clamp(48px, 7vw, 85px);
+        font-weight: 900;
+        letter-spacing: -2px;
+        margin-bottom: 20px;
+        text-shadow: 0 5px 20px #000;
+      }
+
+      .hero p {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #eee;
+        margin-bottom: 30px;
+        text-shadow: 0 2px 10px #000;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .play-btn {
+        background: white;
+        color: black;
+        padding: 14px 28px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 17px;
+      }
+
+      .play-btn:hover {
+        background: #ccc;
+        transform: scale(1.04);
+      }
+
+      .info-btn {
+        background: #555b;
+        color: white;
+        padding: 14px 28px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 17px;
+        backdrop-filter: blur(5px);
+      }
+
+      .info-btn:hover {
+        background: #777b;
+      }
+
+      /* CONTENT ROWS */
+
+      .content {
+        padding: 0 5% 60px;
+        margin-top: -65px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .section-title {
+        font-size: 23px;
+        font-weight: bold;
+        margin: 30px 0 18px;
+      }
+
+      .cards {
+        display: flex;
+        gap: 15px;
+        overflow-x: auto;
+        padding: 12px 5px 25px;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+      }
+
+      .cards::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* PHOTOS */
+
+      .photo-card {
+        flex: 0 0 245px;
+        height: 155px;
+        border-radius: 7px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.35s ease;
+        background: #202020;
+        position: relative;
+      }
+
+      .photo-card:hover {
+        transform: scale(1.08);
+        z-index: 5;
+        box-shadow: 0 8px 30px #000;
+      }
+
+      .photo-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.4s;
+      }
+
+      .photo-card:hover img {
+        filter: brightness(1.12);
+      }
+
+      /* VIDEOS */
+
+      .video-card {
+        flex: 0 0 260px;
+        background: #181818;
+        border-radius: 7px;
+        overflow: hidden;
+        transition: 0.3s;
+        border: 1px solid #292929;
+      }
+
+      .video-card:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 10px 30px #000;
+        border-color: #555;
+      }
+
+      .video-card video {
+        width: 100%;
+        height: 155px;
+        display: block;
+        object-fit: contain;
+        background: black;
+      }
+
+      .video-card p {
+        padding: 13px;
+        font-size: 14px;
+        color: #eee;
+        font-weight: bold;
+      }
+
+      /* PHOTO VIEWER */
+
+      .viewer {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.97);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+        padding: 55px 15px 20px;
+      }
+
+      .viewer img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 5px;
+      }
+
+      .close {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 38px;
+        color: white;
+        background: transparent;
+        z-index: 5;
+      }
+
+      .close:hover {
+        color: #e50914;
+        transform: scale(1.15);
+      }
+
+      /* PLAY ALL PLAYER */
+
+      .video-player {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1900;
+        background: #000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .video-player video {
+        width: 100%;
+        max-width: 1100px;
+        max-height: 80vh;
+        outline: none;
+      }
+
+      .video-player .close {
+        top: 15px;
+      }
+
+      /* FOOTER */
+
+      footer {
+        text-align: center;
+        padding: 40px 15px;
+        color: #777;
+        font-size: 13px;
+        border-top: 1px solid #222;
+        letter-spacing: 1px;
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 600px) {
+        .navbar {
+          height: 60px;
+        }
+
+        .logo {
+          font-size: 27px;
+        }
+
+        .hero {
+          height: 75vh;
+          min-height: 480px;
+          background-position: 60% center;
+          padding: 0 5%;
+        }
+
+        .hero-content {
+          padding-top: 60px;
+        }
+
+        .hero h1 {
+          font-size: 48px;
+        }
+
+        .hero p {
+          font-size: 14px;
+        }
+
+        .content {
+          margin-top: -35px;
+          padding: 0 4% 40px;
+        }
+
+        .section-title {
+          font-size: 19px;
+        }
+
+        .photo-card {
+          flex-basis: 180px;
+          height: 120px;
+        }
+
+        .video-card {
+          flex-basis: 220px;
+        }
+
+        .video-card video {
+          height: 130px;
+        }
+
+        .profiles h1 {
+          font-size: 30px;
+        }
+
+        .profile img {
+          width: 125px;
+          height: 125px;
+        }
+
+        .letter {
+          padding: 28px 20px;
+        }
+
+        .letter h2 {
+          font-size: 21px;
+        }
+
+        .letter p {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- INTRO -->
+
+    <div class="intro" id="intro">
+      <h1>N</h1>
+      <button class="start-btn" onclick="openLetter()">Continue ❤️</button>
+    </div>
+
+    <!-- SORRY LETTER -->
+
+    <div class="letter-screen" id="letterScreen">
+      <div class="letter">
+        <div style="font-size: 55px; margin-bottom: 15px">💌</div>
+
+        <h2>A Little Letter For You, Bachaaaa ❤️</h2>
+
+        <p>
+          Bachaaaa, sabse pehle I am really really sorry. Mujhse kabhi kabhi
+          galtiyan ho jaati hain, kabhi main bina soche kuch keh deta hoon, aur
+          kabhi apni feelings express karte karte cheezein aur complicated kar
+          deta hoon.
+        </p>
+
+        <p>
+          Lekin ek baat hamesha yaad rakhna, mera intention kabhi bhi tujhe hurt
+          karna nahi hota. Tu mere liye bohot special hai aur teri smile, teri
+          happiness aur tera sukoon mere liye matter karta hai.
+        </p>
+
+        <p>
+          Main perfect nahi hoon, par main apni galtiyon ko samajhne aur khud ko
+          better banane ki poori koshish karunga. Main nahi chahta ki meri wajah
+          se tere cute se face par kabhi sadness aaye.
+        </p>
+
+        <p>
+          I hope tu meri baat samjhegi. Ye chhoti si website sirf ek surprise
+          nahi, balki meri taraf se ek reminder hai ki humari memories mere liye
+          kitni precious hain.
+        </p>
+
+        <p style="color: white; font-weight: bold">
+          I am sorry, bachaaaa. I love you so much. 🥺❤️
+        </p>
+
+        <p style="color: #e50914; font-weight: bold">Always yours ❤️</p>
+
+        <button class="red-btn" onclick="openProfiles()">
+          Open Your Netflix ❤️
+        </button>
+      </div>
+    </div>
+
+    <!-- WHO'S WATCHING -->
+
+    <div class="profiles" id="profiles">
+      <h1>Who's Watching?</h1>
+
+      <div class="profile" onclick="openNetflix()">
+        <img src="C:\Users\vprat\Downloads\vr.jpg.jpeg" alt="Bachaaaa" />
+
+        <p>bachaaaa ❤️</p>
+      </div>
+    </div>
+
+    <!-- NETFLIX HOMEPAGE -->
+
+    <div class="main" id="main">
+      <nav class="navbar">
+        <div class="logo">NETFLIX</div>
+
+        <span>For Bachaaaa ❤️</span>
+      </nav>
+
+      <!-- HERO -->
+
+      <section class="hero">
+        <div class="hero-content">
+          <div class="tag">N ORIGINAL</div>
+
+          <h1>Our Story ❤️</h1>
+
+          <p>
+            Every picture has a story. Every video has a memory. And every
+            memory has you in it.
+          </p>
+
+          <div class="hero-buttons">
+            <button class="play-btn" onclick="playAll()">▶ Play All</button>
+
+            <button class="info-btn" onclick="scrollToMemories()">
+              ℹ Our Memories
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MEMORIES -->
+
+      <div class="content" id="memories">
+        <h2 class="section-title">❤️ Our Favourite Memories</h2>
+
+        <div class="cards">
+          <div class="photo-card" onclick="openPhoto('images/lo.jpg.jpeg')">
+            <img src="C:\Users\vprat\Downloads\lo.jpg.jpeg" alt="Memory 1" />
+          </div>
+
+          <div class="photo-card" onclick="openPhoto('images/se.jpg.jpeg')">
+            <img src="C:\Users\vprat\Downloads\se.jpg.jpeg" alt="Memory 2" />
+          </div>
+
+          <div class="photo-card" onclick="openPhoto('images/ve.jpg.jpeg')">
+            <img src="C:\Users\vprat\Downloads\ve.jpg.jpeg" alt="Memory 3" />
+          </div>
+
+          <div class="photo-card" onclick="openPhoto('images/nn.jpg.jpeg')">
+            <img src="C:\Users\vprat\Downloads\nn.jpg.jpeg" alt="Memory 4" />
+          </div>
+
+          <div class="photo-card" onclick="openPhoto('images/vvv.jpg.jpeg')">
+            <img src="C:\Users\vprat\Downloads\vvv.jpg.jpeg" alt="Memory 5" />
+          </div>
+
+          <div class="photo-card" onclick="openPhoto('images/par.jpg.jpeg')">
+            <img src="C:\Users\vprat\Downloads\par.jpg.jpeg" alt="Memory 6" />
+          </div>
+        </div>
+
+        <!-- VIDEOS -->
+
+        <h2 class="section-title">🎬 Our Little Moments</h2>
+
+        <div class="cards" id="videoCards">
+          <div class="video-card">
+            <video controls preload="metadata" playsinline>
+              <source src="C:\Users\vprat\Downloads\cu.mp4" type="video/mp4" />
+            </video>
+            <p>Our Little Moment 1 ❤️</p>
+          </div>
+
+          <div class="video-card">
+            <video controls preload="metadata" playsinline>
+              <source src="C:\Users\vprat\Downloads\vi.mp4" type="video/mp4" />
+            </video>
+            <p>Our Little Moment 2 ❤️</p>
+          </div>
+
+          <div class="video-card">
+            <video controls preload="metadata" playsinline>
+              <source src="C:\Users\vprat\Downloads\vw.mp4" type="video/mp4" />
+            </video>
+            <p>Our Little Moment 3 ❤️</p>
+          </div>
+
+          <div class="video-card">
+            <video controls preload="metadata" playsinline>
+              <source src="C:\Users\vprat\Downloads\ve.mp4" type="video/mp4" />
+            </video>
+            <p>Our Little Moment 4 ❤️</p>
+          </div>
+        </div>
+      </div>
+
+      <footer>Made with ❤️, only for you, Bachaaaa.</footer>
+    </div>
+
+    <!-- FULL SCREEN PHOTO -->
+
+    <div class="viewer" id="viewer" onclick="closePhoto()">
+      <button class="close" onclick="closePhoto()">×</button>
+
+      <img
+        id="fullPhoto"
+        src=""
+        alt="Our memory"
+        onclick="event.stopPropagation()"
+      />
+    </div>
+
+    <!-- PLAY ALL VIDEO PLAYER -->
+
+    <div class="video-player" id="videoPlayer">
+      <button class="close" onclick="stopAll()">×</button>
+
+      <video id="mainVideo" controls playsinline></video>
+    </div>
+
+    <script>
+      /* SCREEN TRANSITIONS */
+
+      function openLetter() {
+        document.getElementById("intro").style.display = "none";
+
+        document.getElementById("letterScreen").style.display = "flex";
+      }
+
+      function openProfiles() {
+        document.getElementById("letterScreen").style.display = "none";
+
+        document.getElementById("profiles").style.display = "flex";
+      }
+
+      function openNetflix() {
+        document.getElementById("profiles").style.display = "none";
+
+        const netflix = document.getElementById("main");
+
+        netflix.style.display = "block";
+
+        window.scrollTo(0, 0);
+      }
+
+      /* PHOTO VIEWER */
+
+      function openPhoto(path) {
+        const viewer = document.getElementById("viewer");
+
+        const image = document.getElementById("fullPhoto");
+
+        image.src = path;
+
+        viewer.style.display = "flex";
+
+        document.body.style.overflow = "hidden";
+      }
+
+      function closePhoto() {
+        document.getElementById("viewer").style.display = "none";
+
+        document.body.style.overflow = "";
+      }
+
+      /* SCROLL */
+
+      function scrollToMemories() {
+        document.getElementById("memories").scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+
+      const videoSources = [
+        "videos/cu.mp4",
+        "videos/vi.mp4",
+        "videos/vw.mp4",
+        "videos/ve.mp4",
+      ];
+
+      let currentVideo = 0;
+      let videoLoading = false;
+
+      const mainVideo = document.getElementById("mainVideo");
+      const videoPlayer = document.getElementById("videoPlayer");
+
+      function playAll() {
+        currentVideo = 0;
+        videoLoading = false;
+
+        videoPlayer.style.display = "flex";
+        document.body.style.overflow = "hidden";
+
+        mainVideo.controls = true;
+        mainVideo.muted = false;
+
+        playCurrentVideo();
+      }
+
+      function playCurrentVideo() {
+        if (currentVideo >= videoSources.length) {
+          stopAll();
+          alert("All our memories have been played ❤️");
+          return;
+        }
+
+        videoLoading = true;
+
+        mainVideo.pause();
+        mainVideo.removeAttribute("src");
+        mainVideo.load();
+
+        mainVideo.src = videoSources[currentVideo];
+        mainVideo.load();
+
+        mainVideo.oncanplay = async function () {
+          if (!videoLoading) return;
+
+          videoLoading = false;
+
+          try {
+            await mainVideo.play();
+          } catch (error) {
+            console.error("Playback error:", error);
+            alert("Unable to play this video. Please check its format.");
+          }
+        };
+
+        mainVideo.onerror = function () {
+          videoLoading = false;
+
+          console.error(
+            "Video loading failed:",
+            videoSources[currentVideo],
+            mainVideo.error,
+          );
+
+          alert(
+            "Cannot load " +
+              videoSources[currentVideo] +
+              ". Check the file name, location and MP4 format.",
+          );
+        };
+      }
+
+      mainVideo.addEventListener("ended", function () {
+        currentVideo++;
+        playCurrentVideo();
+      });
+
+      function stopAll() {
+        videoLoading = false;
+
+        mainVideo.pause();
+        mainVideo.removeAttribute("src");
+        mainVideo.load();
+
+        videoPlayer.style.display = "none";
+        document.body.style.overflow = "";
+      }
+
+      /* KEYBOARD */
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closePhoto();
+
+          stopAll();
+        }
+      });
+    </script>
+  </body>
+</html>
